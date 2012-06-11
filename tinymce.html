@@ -1,0 +1,100 @@
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head>
+  <title>Add Widget Instance</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <link href="tinymce.css?ver=1" media="screen, projection" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/wp-includes/js/jquery/jquery.js"></script>
+  <script type="text/javascript" src="/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+  <script type="text/html">
+  <optgroup label="{{sidebar}}">
+    {{#widget}}
+    <option>{{.}}</option>
+    {{#widget}}
+    <option value="">No widgets found</option>
+  </optgroup>
+  </script>
+  <script>
+
+  (function($){
+    $(function(){
+
+      var $cancel = $('#cancel'),
+          $insert = $('#insert'),
+          $widgetinstance_form = $('#widgetinstance_form'),
+          $selectWidget = $('#select-widget');
+          xhr = $.ajax({ 
+  type: 'POST',
+  url: window.parent.widgetinstance.ajaxurl,
+  data: {action: 'getWidgets'},
+  success: function(result){
+    var o = '';
+    result= JSON.parse(result);
+    $.each(result, function(sidebar, widgets) {
+      if (!widgets.length) return;
+      o += '<optgroup label="' + sidebar + '">';
+      $.each(widgets, function(key, widget) {
+        o += '<option>' + widget + '</option>';
+      });
+      o += '</optgroup>';
+    });
+    $selectWidget.append(o);
+  },
+  complete: function(){
+    ; // maybe set ajax running boolean flag to false?      
+  }
+          });
+
+      $widgetinstance_form.submit(function(e){
+        var $selectWidget = $('#select-widget'),
+            shortcode = '[widget_instance';
+        shortcode += ' id="' + $selectWidget.val() + '"';        
+        shortcode += ']';
+
+        // inserts the shortcode into the active editor
+        window.parent.tinyMCE.activeEditor.execCommand('mceInsertContent', 0, shortcode);
+        tinyMCEPopup.close();
+        // closes Thickbox
+        return false;
+        e.preventDefault;
+      });
+      
+      $insert.bind('click', function(){
+        $widgetinstance_form.trigger('submit');
+        tinyMCEPopup.close();
+      });
+      
+      $cancel.bind('click', function(){
+        tinyMCEPopup.close();
+      });
+      
+    });
+  })(jQuery);
+  
+  </script>
+</head>
+<body>
+  <div class="widgetinstance_wrapper">
+    <form id="widgetinstance_form">
+      <div class="wrap">
+        <div id="content1" class="">
+          <h2>Available widgets</h2>
+          <p>
+            <label for="photoid">Widget</label>
+            <select id="select-widget">
+              <option>select a widget</option>
+            </select>
+          </p>
+        </div>
+      </div>
+    </form>
+    <div class="mceActionPanel">
+      <div style="float: left">
+        <input type="button" id="cancel" name="cancel" value="Cancel" />
+      </div>
+      <div style="float: right">
+        <input type="submit" id="insert" name="insert" value="Insert" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>
