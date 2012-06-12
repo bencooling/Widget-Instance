@@ -1,60 +1,54 @@
 <?php
-/*
-Plugin Name: Widget Instance
-Plugin URI: http://bcooling.com.au
-Description: Display/output a specific widget instance using either a: short code, function, action or wysiwyg button
-Version: 0.5
-Author: Ben Cooling
-Author URI: http://bcooling.com.au
-License: Copyright Ben Cooling
-*/
 
-/**
- * 
- * Bootstrap file for plugin
- * 
- */
-
-// Plugin Constants
-define('WIDGETINSTANCE_PREFIX', 'tWi_');
-define('WIDGETINSTANCE_FILE', __FILE__);
-define('WIDGETINSTANCE_DIR_PATH', plugin_dir_path(__FILE__));
-define('WIDGETINSTANCE_AJAX_CLASS', 'Ajax');
-define('WIDGETINSTANCE_ADMIN_CLASS', 'Admin');
-define('WIDGETINSTANCE_PUBLIC_CLASS', 'Public');
-
-// Determine context for plugin
-if ( is_admin() ) {
-  if ( defined('DOING_AJAX') && DOING_AJAX ){
-    $file = WIDGETINSTANCE_AJAX_CLASS;
+class tWi_Public {
+  
+  public function __construct(){
+//    add_action('widget_instance',     array($this, 'widget_instance'), 10, 2);
+    add_action('init',                array($this, 'init'));
   }
-  else {
-    $file = WIDGETINSTANCE_ADMIN_CLASS;
+      
+  public function widget_instance($widget_id) {
+    global $wp_registered_widgets;
+    
+    // validation
+    if (!array_key_exists($widget_id, $wp_registered_widgets)) {
+      echo 'No widget found with that id'; return;
+    }
+    
+    // default params
+    $presentation = array("before_widget"=> "", "after_widget"=> "");
+    $params = array_merge(
+      array( array_merge( $presentation, array('widget_id' => $widget_id, 'widget_name' => $wp_registered_widgets[$widget_id]['name']) ) ),
+      (array) $wp_registered_widgets[$widget_id]['params']
+    );
+    
+    $params = apply_filters( 'dynamic_sidebar_params', $params ); // doesnt't add/minus from data
+
+    $callback = $wp_registered_widgets[$widget_id]['callback'];
+
+    if ( is_callable($callback) ) {
+      call_user_func_array($callback, $params);
+    }
+
   }
-}
-else {
-  $file = WIDGETINSTANCE_PUBLIC_CLASS;
-}
-
-// Instantiate required plugin controller
-$className = WIDGETINSTANCE_PREFIX . $file;
-if (! class_exists($className) ){
-  require( WIDGETINSTANCE_DIR_PATH . $file . '.php');
-}
-
-$tWi_Plugin = new $className;
-
-if ($file===WIDGETINSTANCE_PUBLIC_CLASS){
-  function get_the_widget_instance($widget_id){
+  
+  /**
+  *
+  * Add shortcode
+  * [widget_instance id='adrotater-5']
+  * 
+  */
+  public function init(){
+    add_shortcode( 'widget_instance', array($this, 'widget_instance_shortcode'));
+  }
+  
+  public function widget_instance_shortcode($atts){
+    extract(shortcode_atts(array('id' => ''), $atts));
     ob_start();
-    global $tWi_Plugin;
-    $tWi_Plugin->widget_instance($widget_id);
+    $this->widget_instance($id);
     $o = ob_get_contents();
     ob_end_clean();
     return $o;
   }
-  function the_widget_instance($widget_id){
-    global $tWi_Plugin;
-    $tWi_Plugin->widget_instance($widget_id);
-  }
+
 }
