@@ -3,7 +3,6 @@
 class tWi_Public {
   
   public function __construct(){
-//    add_action('widget_instance',     array($this, 'widget_instance'), 10, 2);
     add_action('init',                array($this, 'init'));
   }
       

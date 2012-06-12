@@ -2,7 +2,7 @@
 /*
 Plugin Name: Widget Instance
 Plugin URI: http://bcooling.com.au
-Description: Display/output a specific widget instance using either a: short code, function, action or wysiwyg button
+Description: Display/output a specific widget instance using either a shortcode, function, action or wysiwyg button
 Version: 0.5
 Author: Ben Cooling
 Author URI: http://bcooling.com.au
