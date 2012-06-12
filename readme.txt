@@ -8,7 +8,7 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Display/output a specific widget instance using either a: short code, function, action or wysiwyg button.
+Display/output a specific widget instance using either a shortcode, function, action or wysiwyg button.
 
 == Description ==
 
