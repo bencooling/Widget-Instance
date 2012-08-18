@@ -49,8 +49,6 @@
             $format = $('#format:checked'),
             shortcode = '[widget_instance';
         $formatval = ($format.length) ? $format.val() : 0;
-        console.log('$format.length: ', $format.length);
-        console.log('$format.val(): ', $format.val());
         shortcode += ' id="' + $selectWidget.val() + '"' + ' format="' + $formatval +'"';
         shortcode += ']';
 
