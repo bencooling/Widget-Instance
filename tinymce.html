@@ -30,7 +30,7 @@
     var o = '';
     result= JSON.parse(result);
     $.each(result, function(sidebar, widgets) {
-      if (!widgets.length) return;
+      if ( (!widgets) || (!widgets.length) ) return;
       o += '<optgroup label="' + sidebar + '">';
       $.each(widgets, function(key, widget) {
         o += '<option>' + widget + '</option>';
@@ -46,8 +46,12 @@
 
       $widgetinstance_form.submit(function(e){
         var $selectWidget = $('#select-widget'),
+            $format = $('#format:checked'),
             shortcode = '[widget_instance';
-        shortcode += ' id="' + $selectWidget.val() + '"';        
+        $formatval = ($format.length) ? $format.val() : 0;
+        console.log('$format.length: ', $format.length);
+        console.log('$format.val(): ', $format.val());
+        shortcode += ' id="' + $selectWidget.val() + '"' + ' format="' + $formatval +'"';
         shortcode += ']';
 
         // inserts the shortcode into the active editor
@@ -83,6 +87,10 @@
             <select id="select-widget">
               <option>select a widget</option>
             </select>
+          </p>
+          <p>
+            <label for="format">Include sidebar format</label>
+            <input id="format" type="checkbox" value="1" />
           </p>
         </div>
       </div>

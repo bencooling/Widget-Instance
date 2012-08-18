@@ -3,7 +3,7 @@ Contributors: global_1981
 Donate link: http://bcooling.com.au
 Tags: widget, widgets, display widget, widget instance
 Requires at least: 2.9.1
-Tested up to: 3.3.2
+Tested up to: 3.4.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -42,6 +42,7 @@ This section describes how to install the plugin and get it working.
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Within the editor, you can use the Widget Instance editor button to select 
 from available widgets or enter a shortcode following the syntax: [widget_instance id="[widget_id]"]
+1. Optional step: If you would like to retain the sidebar format of the widget, check the Include Sidebar format checkbox 
 1. Within template files you can use the following php snippets:
 
 * Action: do_action('widget_instance', '[widget_id]');
@@ -66,6 +67,11 @@ wp_get_sidebars_widgets()
 
 
 == Changelog ==
+
+= 0.8 =
+* Tested on 3.4.1
+* Added option for including sidebar formatting
+* The widget's title will now include the sidebar title markup (More useful than having a plain text title)
 
 = 0.5 =
 * Initial release

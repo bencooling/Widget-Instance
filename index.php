@@ -3,7 +3,7 @@
 Plugin Name: Widget Instance
 Plugin URI: http://bcooling.com.au
 Description: Display/output a specific widget instance using either a shortcode, function, action or wysiwyg button
-Version: 0.5
+Version: 0.8
 Author: Ben Cooling
 Author URI: http://bcooling.com.au
 License: Copyright Ben Cooling
@@ -19,21 +19,18 @@ License: Copyright Ben Cooling
 define('WIDGETINSTANCE_PREFIX', 'tWi_');
 define('WIDGETINSTANCE_FILE', __FILE__);
 define('WIDGETINSTANCE_DIR_PATH', plugin_dir_path(__FILE__));
-define('WIDGETINSTANCE_AJAX_CLASS', 'Ajax');
-define('WIDGETINSTANCE_ADMIN_CLASS', 'Admin');
-define('WIDGETINSTANCE_PUBLIC_CLASS', 'Public');
 
 // Determine context for plugin
 if ( is_admin() ) {
   if ( defined('DOING_AJAX') && DOING_AJAX ){
-    $file = WIDGETINSTANCE_AJAX_CLASS;
+    $file = 'Ajax';
   }
   else {
-    $file = WIDGETINSTANCE_ADMIN_CLASS;
+    $file = 'Admin';
   }
 }
 else {
-  $file = WIDGETINSTANCE_PUBLIC_CLASS;
+  $file = 'Public';
 }
 
 // Instantiate required plugin controller
@@ -44,17 +41,18 @@ if (! class_exists($className) ){
 
 $tWi_Plugin = new $className;
 
-if ($file===WIDGETINSTANCE_PUBLIC_CLASS){
-  function get_the_widget_instance($widget_id){
+// template tags need to be in global space, otherwise this would belong in Public class. 
+if ($file==='Public'){
+  function get_the_widget_instance($widget_id, $format=false){
     ob_start();
     global $tWi_Plugin;
-    $tWi_Plugin->widget_instance($widget_id);
+    $tWi_Plugin->widget_instance($widget_id, $format);
     $o = ob_get_contents();
     ob_end_clean();
     return $o;
   }
-  function the_widget_instance($widget_id){
+  function the_widget_instance($widget_id, $format=false){
     global $tWi_Plugin;
-    $tWi_Plugin->widget_instance($widget_id);
+    $tWi_Plugin->widget_instance($widget_id, $format);
   }
 }

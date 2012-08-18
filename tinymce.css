@@ -12,12 +12,7 @@
   padding:5px 0; margin:0;
 }
 #widgetinstance_form label {
-  width: 20%; display: block; float: left;
-}
-#widgetinstance_form input {
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #CCC; padding: 3px 8px; outline: none; width:75%
+  width: 30%; display: block; float: left;
 }
 #widgetinstance_form .form_container {
   padding:15px;
