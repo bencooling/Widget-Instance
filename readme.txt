@@ -3,7 +3,7 @@ Contributors: global_1981
 Donate link: http://bcooling.com.au
 Tags: widget, widgets, display widget, widget instance
 Requires at least: 2.9.1
-Tested up to: 3.4.1
+Tested up to: 3.5.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -67,6 +67,10 @@ wp_get_sidebars_widgets()
 
 
 == Changelog ==
+
+= 0.9 =
+* Tested on 3.5.1
+* Fixed php warnign typo
 
 = 0.8 =
 * Tested on 3.4.1
