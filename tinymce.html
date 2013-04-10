@@ -17,7 +17,6 @@
 
   (function($){
     $(function(){
-
       var $cancel = $('#cancel'),
           $insert = $('#insert'),
           $widgetinstance_form = $('#widgetinstance_form'),
@@ -30,10 +29,11 @@
     var o = '';
     result= JSON.parse(result);
     $.each(result, function(sidebar, widgets) {
-      if ( (!widgets) || (!widgets.length) ) return;
+      if (!widgets.length) return;
       o += '<optgroup label="' + sidebar + '">';
       $.each(widgets, function(key, widget) {
-        o += '<option>' + widget + '</option>';
+        var ti = (widget.title.length) ? ' (' + widget.title + ')' : '' ;
+        o += '<option value="' + widget.id + '">' + widget.id + ti + '</option>';
       });
       o += '</optgroup>';
     });

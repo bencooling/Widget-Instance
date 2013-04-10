@@ -68,6 +68,9 @@ wp_get_sidebars_widgets()
 
 == Changelog ==
 
+= 0.9.1 =
+* Can now select a widget by it's title as well as its id. The title is in parenthesis after the id.
+
 = 0.9 =
 * Tested on 3.5.1
 * Fixed php warnign typo
