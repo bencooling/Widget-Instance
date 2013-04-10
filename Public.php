@@ -70,7 +70,7 @@ class tWi_Public {
       array( array_merge( $presentation, array('widget_id' => $widget_id, 'widget_name' => $wp_registered_widgets[$widget_id]['name']) ) ),
       (array) $wp_registered_widgets[$widget_id]['params']
     );
-    
+
     // Substitute HTML id and class attributes into before_widget
     $classname_ = '';
     foreach ( (array) $wp_registered_widgets[$widget_id]['classname'] as $cn ) {
@@ -81,7 +81,6 @@ class tWi_Public {
     }
     $classname_ = ltrim($classname_, '_');
     $params[0]['before_widget'] = sprintf($params[0]['before_widget'], $widget_id, $classname_);
-
 
     $params = apply_filters( 'dynamic_sidebar_params', $params ); // doesnt't add/minus from data
     
