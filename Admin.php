@@ -20,7 +20,7 @@ class tWi_Admin {
   
   public function admin_enqueue_scripts(){
     wp_enqueue_script('jquery');
-    wp_localize_script( 'jquery', 'widgetinstance', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'jquery', 'widgetinstance', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'BasePath' => includes_url() ) );
   }
   
   public function mce_external_plugins($plugins){

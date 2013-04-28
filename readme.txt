@@ -68,6 +68,9 @@ wp_get_sidebars_widgets()
 
 == Changelog ==
 
+= 0.9.2 =
+* Added javascript loader, fix for wordpress installs where wp-includes url is not in the root.
+
 = 0.9.1 =
 * Can now select a widget by it's title as well as its id. The title is in parenthesis after the id.
 
